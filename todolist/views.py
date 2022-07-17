@@ -17,13 +17,14 @@ def index(request):
             content = title + " -- " + date + " " + category 
             Todo = TodoList(title=title, content = content, due_date = date, category=Category.objects.get(name=category))
             Todo.save()
-            return redirect("")
+            return redirect("/")
 
         if "taskDelete" in request.POST: # checking if there is a request to delete a todo
             checkedlist = request.POST["checkedbox"] # checked todos  to be deleted
-
+            
             for todo_id in checkedlist:
                 todo = TodoList.objects.get(id=int(todo_id)) # getting todo id
                 todo.delete()
+
     
     return render(request, "index.html",{"todos" : todos, "categories" : categories})
